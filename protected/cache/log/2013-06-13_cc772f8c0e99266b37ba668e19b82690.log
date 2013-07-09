@@ -1,0 +1,20 @@
+2013-06-13 09:23:21 | 127.0.0.1 | /miso/index.php |/home/100msh/www/miso/protected/apps/default/view/index_content.html模板文件不存在
+2013-06-13 09:24:26 | 127.0.0.1 | /miso/index.php |/home/100msh/www/miso/protected/apps/default/view/index_content.html模板文件不存在
+2013-06-13 11:19:43 | 127.0.0.1 | /miso/index.php |/home/100msh/www/miso/protected/apps/default/view/index_index.html模板文件不存在
+2013-06-13 11:20:42 | 127.0.0.1 | /miso/index.php |/home/100msh/www/miso/protected/apps/default/view/index_index.html模板文件不存在
+2013-06-13 16:21:30 | 127.0.0.1 | /miso/index.php | MySQL Query Error<br>
+					<b>SQL</b>: SELECT store_id, store_name, tel, store_logo, store_banner FROM ecm_store  WHERE store_id in( )<br>
+					<b>错误详情</b>: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1<br>
+					<b>错误代码</b>:1064<br>
+2013-06-13 16:22:28 | 127.0.0.1 | /miso/index.php | MySQL Query Error<br>
+					<b>SQL</b>: SELECT store_id, store_name, tel, store_logo, store_banner FROM ecm_store  WHERE store_id in( )<br>
+					<b>错误详情</b>: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1<br>
+					<b>错误代码</b>:1064<br>
+2013-06-13 16:26:29 | 127.0.0.1 | /miso/index.php | MySQL Query Error<br>
+					<b>SQL</b>: SELECT g.goods_name, g.default_image, g.price, g.store_id, s.region_id, s.region_name FROM  ecm_goods g LEFT JOIN ecm_store s ON g.store_id = s.store_id WHERE g.if_show = 1 AND g.closed = 0 AND s.state = 1 AND (g.goods_name LIKE '%c%') AND s.region_id > 0 GROUP BY s.region_id ORDER BY count DESC limit 0, 100<br>
+					<b>错误详情</b>: Unknown column 'count' in 'order clause'<br>
+					<b>错误代码</b>:1054<br>
+2013-06-13 16:26:30 | 127.0.0.1 | /miso/index.php | MySQL Query Error<br>
+					<b>SQL</b>: SELECT g.goods_name, g.default_image, g.price, g.store_id, s.region_id, s.region_name FROM  ecm_goods g LEFT JOIN ecm_store s ON g.store_id = s.store_id WHERE g.if_show = 1 AND g.closed = 0 AND s.state = 1 AND (g.goods_name LIKE '%c%') AND s.region_id > 0 GROUP BY s.region_id ORDER BY count DESC limit 0, 100<br>
+					<b>错误详情</b>: Unknown column 'count' in 'order clause'<br>
+					<b>错误代码</b>:1054<br>

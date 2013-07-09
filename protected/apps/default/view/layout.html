@@ -1,0 +1,629 @@
+<?php if(!defined('APP_NAME')) exit;?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+<title>社区服务平台</title>
+<link rel="shortcut icon" href="__PUBLICAPP__/img/favicon.ico">
+<link type="text/css" rel="stylesheet" href="__PUBLICAPP__/css/base.css">
+<script src="__PUBLIC__/__js__/do.min.js" data-cfg-corelib="__PUBLIC__/__js__/jquery-1.7.1.min.js"></script>
+<script src="__PUBLIC__/__js__/baiduTemplate.min.js"></script>
+<script>
+Do.add('bbq-js', {path: '__PUBLIC__/__js__/jquery-ba-bbq.min.js', type: 'js'});
+Do.add('iscroll-js', {path: '__PUBLIC__/__js__/iscroll.js', type: 'js'});
+Do.add('isotope-js', {path: '__PUBLIC__/__js__/jquery-isotope.min.js', type: 'js'});
+</script>
+
+</head>
+
+<body class="style_orange">
+<!-- 欢迎 
+<div class="box_welcome"></div>
+-->
+<!-- 今日图片 <img src="__PUBLICAPP__/img/todayPic/today.jpg" alt="" />-->
+<div class="box_todayPic"></div>
+
+<!-- 首页 -->
+<div id="ajax_index" class="ajax_box">
+    <div class="mod_loading"></div>
+    <!-- 今日图片 -->
+    
+    <div id="js_index_content_wrapper" class="iscroll" style="top:0;">
+        <div>
+            <!-- logo -->
+            <div class="box_logo">
+                <div class="mod_logo"></div>
+            </div>
+            <!-- 搜索引导 -->
+            <a class="mod_leadsearch" href="#index.php?r=default/search/index"><span class="icon"></span></a>
+            <!-- 应用 -->
+            <div class="box_app">
+                <div class="ku_fix mod_app">
+                    <!-- 暂时没有用户登录功能
+                    <div class="list my_community" onclick="location.href='http://www.100msh.com/'">
+                        <div class="icon"></div>
+                        <div class="text">我的社区</div>
+                    </div>
+                    -->
+                    <div class="list news" onclick="location.href='http://www.100msh.cn/'">
+                        <div class="icon"></div>
+                        <div class="text">社区资讯</div>
+                    </div>
+                    <div class="list mall" onclick="location.href='http://shop.100msh.com/'">
+                        <div class="icon"></div>
+                        <div class="text">社区商城</div>
+                    </div>
+                    <!-- 跑腿服务平台没有上线
+                    <div class="list run" onclick="location.href='http://www.100msh.com/'">
+                        <div class="icon"></div>
+                        <div class="text">跑腿服务</div>
+                    </div>
+                    -->
+                    <div class="list warehouse" onclick="location.href='http://store.100msh.com/'">
+                        <div class="icon"></div>
+                        <div class="text">仓储服务</div>
+                    </div>
+                    <div class="list express" onclick="location.href='http://express.100msh.com/'">
+                        <div class="icon"></div>
+                        <div class="text">快递服务</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 搜索 -->
+<div id="ajax_search" class="ajax_box">
+    <em class="load_html" style="display:none;"></em>
+    <div class="mod_loading"></div>
+    <!-- 搜索框 -->
+    <div class="mod_searchBox">
+        <div class="search">
+            <div class="inputBox">
+                <input id="index_search_box" type="text" value="{$keyword}" />
+            </div>
+            <div class="clearInput">×</div>
+            <a class=" toSearch" href=""></a>
+            <div class="js_back back" ></div>
+        </div>
+    </div>
+    
+    <div id="js_search_index_wrapper" class="iscroll" style="top:46px;">
+        <div>
+        
+            <!-- 未搜索时 -->
+            <div class="box_no_search">
+                <a class="mod_activity" href="http://www.100msh.cn/event/duanwu">
+                    <img src="__PUBLICAPP__/pic/activity/720.jpg" alt="" />
+                </a>
+                <div class="mod_my_search" id="hot_keywords">
+                    <div class="title">热门搜索：</div>
+                    <script id="search:hot" type="text/html">
+						<div class="ku_fix">
+							<#for(var i=0;i<hot.length;i++){#>
+								<a href=""><#=hot[i]#></a>
+							<#}#>
+						</div>
+					</script>
+                </div>
+            </div>
+            
+            <!-- 已经搜索 -->
+            <div class="box_hasSearch">
+                <!-- 筛选 -->
+                <div class="mod_filter">
+                    <div class="ku_fix tabs">
+                        <div class="tab choose">推荐</div>
+                        <div class="tab">商家</div>
+                        <div class="tab">服务</div>
+                        <div class="tab">资讯</div>
+                    </div>
+                    <div class="action">
+                        筛选
+                    </div>
+                </div>
+                <!-- 结果列表 -->
+                <div class="box_searchResults">
+                    <div class="ku_fix mod_searchResults" id="listOut">
+                    </div>
+                </div>
+                <!-- 加载中 -->
+
+                
+                <!-- 结束 -->
+                <div class="mod_end">亲，没有更多了！</div>
+                
+                <!-- 没有数据 -->
+                <div class="mod_nodata">亲，您搜索的关键字暂时没有结果</div>
+            </div>
+            
+        </div>
+    </div>
+    
+    
+</div>
+
+<!-- 商家 -->
+<div id="ajax_store" class="ajax_box">
+    <em class="load_html" style="display:none;"></em>
+    <div class="mod_loading"></div>
+    
+    <!-- 头部 -->
+    <div class="box_storeHeader">
+        <div class="title">商家</div>
+        <div class="js_back back"></div>
+        <a class="toIndex" href="#"></a>
+        <a class="toSearch" href="#index.php?r=default/search/index"></a>
+    </div>
+    
+    <!-- 选项卡 -->
+    <div id="store_tabs" class="ku_fix mod_storeTab">
+        <div class="tab comment" data-role="tab">评论<span></span></div>
+        <div class="tab base" data-role="tab">基本<span></span></div>
+        <div class="tab goods" data-role="tab">商品<span></span></div>
+    </div>
+    <!-- 内容 -->
+    <div id="js_store_index_wrapper" class="iscroll" style="top:86px;">
+    	<div id="goods_contents">
+            <div id="ajax_store_data">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 商品 -->
+<div id="ajax_goods" class="ajax_box">
+    <em class="load_html" style="display:none;"></em>
+    <div class="mod_loading"></div>
+    <div class="box_goodsHeader">
+        <div class="title">商品</div>
+        <div class="js_back back"></div>
+        <a class="toIndex" href="#"></a>
+        <a class="toSearch" href="#index.php?r=default/search/index"></a>
+    </div>
+    
+    <div id="goods_tabs" class="ku_fix mod_goodsTab">
+        <div class="tab comment" data-role="tab">评论<span></span></div>
+        <div class="tab base" data-role="tab">基本<span></span></div>
+        <div class="tab detail" data-role="tab">详情<span></span></div>
+    </div>
+    <div id="js_goods_index_wrapper" class="iscroll" style="top:86px;">
+    	<div id="store_contents">
+            <div id="ajax_goods_data">
+            </div>
+        </div>
+    </div>
+</div>
+    
+<script>
+Do.ready('bbq-js', 'iscroll-js', function(){
+	
+/**
+ * jQuery 选项卡
+ * Date: 2013-4-18
+ */
+	(function($) {
+		$.fn.tab = function(options) {
+			var o = $.extend({
+				num: 1,
+				contents: ".contents"
+			}, options || {});
+			var CHOOSE = "choose";
+			var HIDE = "ku_thide";
+			
+			this.each(function() {
+				var tab = $(this).children("[data-role=tab]"),
+					content = $(".hashchangeCache:visible").find("[data-role=content]");
+				tab.eq(o.num).addClass(CHOOSE).siblings().removeClass(CHOOSE);
+				
+				$(".hashchangeCache:visible").find("[data-role=content]").eq(o.num).removeClass(HIDE).siblings().addClass(HIDE);
+				
+				tab.bind({
+					"click": function() {
+						var t = $(this), i = t.index();
+						t.addClass(CHOOSE).siblings("." + CHOOSE).removeClass(CHOOSE);
+						$(".hashchangeCache:visible").find("[data-role=content]").eq(i).removeClass(HIDE).siblings().addClass(HIDE);
+					}
+				});
+				
+			});
+		};
+	})(jQuery);
+
+	$("#store_tabs").tab();
+	$("#goods_tabs").tab();
+
+///// jquery封装iscroll
+	(function($){
+		$.fn.iscroll = function(options){
+			if(this.data('iScrollReady') == null){
+				var that = this;
+				var options =  $.extend({}, options);
+					options.onScrollEnd = function(){
+						that.triggerHandler('onScrollEnd', [this]);
+					};
+				arguments.callee.object  = new iScroll(this.get(0), options);
+				// NOTE: for some reason in a complex page the plugin does not register
+				// the size of the element. This will fix that in the meantime.
+				setTimeout(function(scroller){
+					scroller.refresh();
+				}, 1000, arguments.callee.object);
+				this.data('iScrollReady', true);
+			}else{
+				arguments.callee.object.refresh();
+			}
+			return arguments.callee.object;
+		};
+	})(jQuery);
+	
+///// ajax加载页面 开始
+	var cache = {
+		'': $('.bbq-default')
+	};
+	
+	$(window).bind( 'hashchange', function(e) {
+		// 得到#号后面的内容
+		var url = $.param.fragment();
+		// 得到模块名
+		var mod;
+		// 得到页面名
+		var page;
+		
+		if ( url.indexOf('&') > 0 ){
+			mod = url.split("&")[0].split("/")[1];
+			page  = url.split("&")[0].split("/")[2];
+		} else {
+			mod = url.split("/")[1];
+			page  = url.split("/")[2];
+		}
+
+		$('.ajax_box .hashchangeCache').hide();
+		// 所有的非当前的模块隐藏
+		$('.ajax_box').not( $( '#ajax_' + mod ) ).hide();
+		$( '#ajax_' + mod ).show();
+			
+		// 如果 url 已经缓存，则显示对应的内容
+		if ( cache[ url ] ) {
+			if(mod == undefined)
+			{
+				//alert('无hash');
+				//var state = '#index.php'
+				//$.bbq.pushState( state );
+				$( '#ajax_index' ).show();
+				return;
+			}
+			
+			//alert('显示缓存页面');s
+			cache[ url ].closest('#ajax_' + mod).show();
+			cache[ url ].show();
+
+			// 局部ajax刷新
+			ajax_update(mod + '/' + page);
+		} 
+		// 否则在知道的 div 中载入新的内容
+		else 
+		{
+			//alert('载入新页面');
+			// 判断 欢迎模块是否显示
+			var isShow_welcome = ( $(".box_welcome").css('display') == 'none');
+			if(isShow_welcome)
+			{
+				$( '#ajax_' + mod ).find('.mod_loading').show();
+			}
+			// 载入新页面
+			$.ajax({
+				url: url,
+				complete: function() {
+					//cache[ url ] = $('.hashchangeCache');
+					//console.log(cache[ url ]);
+					Do.getData('cache', function(value) {
+						cache[ url ] = value;
+					});
+				},
+				success: function(data) {
+					$('#ajax_' + mod).find('.load_html').data('data-json',data).click();
+					//cache[ url ] = $( '<div class="bbq-item"/>' ).appendTo('#ajax_' + mod).html(data);
+					$('.box_welcome').fadeOut();
+					$( '#ajax_' + mod ).find('.mod_loading').fadeOut();
+					// 页面加载成功后执行页面内函数
+					page_function(mod + '/' + page);
+				}	
+			});
+			/*
+			cache[ url ] = $( '<div class="bbq-item"/>' )
+				.appendTo( '#ajax_' + mod )
+				.load( url, function(){
+										$('.box_welcome').fadeOut();
+										$( '#ajax_' + mod ).find('.mod_loading').fadeOut();
+										// 页面加载成功后执行页面内函数
+										page_function(mod + '/' + page);
+									}
+					);
+			*/
+			// 当前模块滑入视图
+			$('#ajax_' + mod).fadeIn();
+		}
+	})
+	
+	$(window).trigger( 'hashchange' );
+	// ajax加载页面 结束
+
+///// ajax 根据路径更新对应页面的内容 开始
+	function ajax_update(e){
+		switch(e)
+		{ 
+			case 'userCenter/index':
+			//alert(e);
+			break;
+			
+			default:
+			break;
+		}
+	}
+	// ajax 根据路径更新对应页面的内容 结束
+
+///// 页面内函数
+	function page_function(e){
+		switch(e)
+		{ 
+			case 'index/content':
+			//alert('首页');
+			iscroll_index_content();
+			js_back();
+			break;
+
+			case 'search/index':
+			//alert('搜索');
+			iscroll_search_index();
+			js_back();
+			break;
+
+			case 'store/index':
+			//alert('店铺');
+			iscroll_store_index();
+			js_back();
+			break;
+
+			case 'goods/index':
+			//alert('商品');
+			iscroll_goods_index();
+			js_back();
+			break;
+			
+			default:
+			break;
+		}
+	}
+	// ajax 根据路径更新对应页面的内容 结束
+			
+			
+///// 一个个小函数
+
+	// 后退
+	function js_back(){
+		$('.js_back').click(function(){
+			history.back();
+		});
+	}
+	
+///// 页面滚动
+	// 首页
+	function iscroll_index_content(){	
+		$('#js_index_content_wrapper').iscroll({ checkDOMChanges: true, scrollbarClass: 'myScrollbar' });
+		$('#js_index_content_wrapper').bind('onScrollEnd', function(){
+			//alert( '到底了' );
+		});
+	}
+	iscroll_index_content();
+	
+	// 搜索
+	function iscroll_search_index(){	
+		$('#js_search_index_wrapper').iscroll({ checkDOMChanges: true, scrollbarClass: 'myScrollbar' });
+		$('#js_search_index_wrapper').bind('onScrollEnd', function(e, iscroll){
+			//alert($(this).attr('id') +' - '+ iscroll);
+		});
+	}
+	iscroll_search_index();
+	// 商家
+	function iscroll_store_index(){	
+		$('#js_store_index_wrapper').iscroll({ checkDOMChanges: true, scrollbarClass: 'myScrollbar' });
+		
+	}
+	iscroll_store_index();
+	// 商品
+	function iscroll_goods_index(){	
+		$('#js_goods_index_wrapper').iscroll({ checkDOMChanges: true, scrollbarClass: 'myScrollbar' });
+		$('#js_goods_index_wrapper').bind('onScrollEnd', function(e, iscroll){
+			//alert($(this).attr('id') +' - '+ iscroll);
+		});
+	}
+	iscroll_goods_index();
+});
+
+</script>
+<script src="__PUBLICAPP__/js/load-data.min.js"></script>
+<script>
+Do.ready('isotope-js', function(){
+///// 瀑布流
+	var startHref ;
+	var $container = $('#container');
+	
+	$container.isotope({
+		itemSelector : '.listBox'
+	});
+	
+	$('#js_store_index_wrapper').bind('onScrollEnd', function(e, iscroll){
+		
+			//首先取得下一页的链接地址
+			var href=$('.next_page a').attr("href");
+			startHref = href;
+			//判断下一页的链接地址是否存在
+			if( href != undefined ){
+				
+				//如果存在的话，用ajax获取数据
+				$.ajax({
+					type:"get",
+					url:href,
+					success:function(data){
+						//将返回的数据进行处理，挑选出class是post的内容块
+						var $res=$(data).find(".listBox");
+						
+						//结合masonry插件，将内容append进ID是content的内容块中
+						$container.append( $res ).isotope( 'appended', $res );
+						
+						//newHref获取返回的内容中的下一页的链接地址
+						var newHref=$(data).find(".next_page a").attr("href");
+						
+						//判断下一页地址是否存在，如果存在，替换当前页的链接地址。不存在，将当前页链接地址属性href移除，并替换内容为“下一页没有了”
+						if( newHref != undefined ){
+							$(".next_page a").attr("href",newHref);
+						}
+						else
+						{
+							$(".next_page a").html("亲，没有更多了").removeAttr("href")
+						}
+
+
+					}
+				})
+			}
+	});
+});
+</script>
+<script id="goods:detail" type="text/html">
+<!-- 商品_评论 -->
+<div data-role="content">
+	<div class="mod_goodsComment_no">
+		亲，暂时没有评论喔
+	</div>
+</div>
+<!-- 商品_基本 -->
+<div data-role="content">
+	<!-- 商品图片 -->
+	<div class="box_goodsPic" >
+		<img src="http://shop.100msh.com/<#=default_image#>" alt="">
+	</div>
+	
+	<!-- 商品信息 -->
+	<div class="mod_goodsInfo">
+		<div class="title"><#=goods_name#></div>
+		<div class="level">
+			<div class="star"></div>
+		</div>
+		<div class="price"><span>¥</span><#=price#></div>
+		<div class="slogn"><#=tags#></div>
+	</div>
+	
+	<!-- 商品功能 -->
+	<div class="box_goodsAction">
+		<div class="ku_fix mod_goodsAction">
+			<a class=" phone" data-tel="4006660598" data-srcname="cater" href="tel:4006660598">
+				<div class="icon"></div>
+				<div class="info">电话订购</div>
+			</a>
+			<a class=" tostore" href="#index.php?r=default/store/index&id=<#=store_id#>">
+				<div class="icon"></div>
+				<div class="info">商家首页</div>
+			</a>
+		</div>
+	</div>
+</div>
+<!-- 商品_详情 -->
+<div data-role="content">
+	<div class="mod_goodsDetail">
+		<#=description#>
+	</div>
+</div>
+</script>
+<script id="store:detail" type="text/html">
+<!-- 商家_评论 -->
+<div data-role="content">
+	<div class="mod_storeComment_no">
+		亲，暂时没有评论喔
+	</div>
+</div>
+<!-- 商家_基本 -->
+<div data-role="content">
+	<!-- 店铺图片 -->
+	<div class="box_storePic"><img src="http://shop.100msh.com/<#=store.store_logo#>" alt=""></div>
+	
+	<!-- 店铺信息 -->
+	<div class="mod_storeInfo">
+		<div class="title"><#=store.store_name#></div>
+		<div class="level">
+			<div class="star"></div>
+		</div>
+		<div class="address">
+			地址：<#=store.address#>
+		</div>
+		<div class="phone">
+			电话：<#=store.tel#>
+		</div>
+		<div class="contentMen">
+			联&ensp;系&ensp;人：<#=store.owner_name#>
+		</div>
+		<div class="time">
+			服务时间：<#=store.start_time#>-<#=store.close_time#>
+		</div>
+	</div>
+	
+	<!-- 店铺功能 -->
+	<div class="box_storeAction">
+		<div class="ku_fix mod_storeAction">
+			<a class=" phone" data-tel="<#=store.tel#>" data-srcname="cater" href="tel:<#=store.tel#>">
+				<div class="icon"></div>
+				<div class="info">致电商家</div>
+			</a>
+		</div>
+	</div>
+</div>
+<!-- 商品列表 -->
+<div data-role="content">
+	<div id="container" class="ku_fix mod_store_goodsList">
+		<#for(var i=0;i<goods.length;i++){#>
+			<div class="listBox">
+				<a class="list" href="#index.php?r=default/goods/index&id=<#=goods[i].goods_id#>">
+					<div class="picBox">
+						<img src="http://shop.100msh.com/<#=goods[i].default_image#>" alt="" />
+					</div>
+					<div class="name"><#=goods[i].goods_name#></div>
+					<div class="price"><span>¥</span><#=goods[i].price#></div>
+				</a>
+			</div> 
+		<#}#>
+	</div>
+	<div class="next_page">
+		<a href="index.php?r=default/store/goods_2">加载中...</a>
+	</div>
+</div>
+</script>
+<!-- 商品模板 -->
+<script id="search:goods" type="text/html">
+<div class="list goods">
+    <a class=" link" href="#index.php?r=default/goods/index&id=<#=goods_id#>">
+        <div class="pic">
+            <img src="http://shop.100msh.com/<#=default_image#>" alt="" />
+        </div>
+        <div class="service">
+            <div class="title"><#=goods_name#></div>
+            <div class="level"></div>
+            <div class="price"><span>¥</span><#=price#></div>
+        </div>
+    </a>
+</div>
+</script>
+<!-- 店铺模板 -->
+<script id="search:store" type="text/html">
+<div class="list store">
+    <a class=" link" href="#index.php?r=default/store/index&id=<#=store_id#>">
+        <div class="title"><#=store_name#></div>
+        <div class="level"></div>
+        <div class="phone"><#=tel#></div>
+    </a>
+</div>
+</script>
+</body>
+</html>

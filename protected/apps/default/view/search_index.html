@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+<title>社区服务平台</title>
+<link rel="shortcut icon" href="__PUBLICAPP__/img/favicon.ico">
+<link type="text/css" rel="stylesheet" href="__PUBLICAPP__/css/base.css">
+</head>
+<body class="style_orange">
+
+<!-- 搜索 -->
+<div class="mod_header bg_header bdc">
+    <div class="search">
+        <div class="inputBox">
+            <input id="index_search_box" type="text" value="{$keyword}" />
+        </div>
+        <div class="clearInput">×</div>
+        <a class="toSearch" href=""></a>
+        <div class="js_back back" ></div>
+    </div>
+</div>
+
+<!-- 未搜索 -->
+<div id="ajax_search" class="iscroll" style="top:46px;">
+    <div>
+        <div class="mod_my_search" id="hot_keywords">
+            <div class="title">热门搜索：</div>
+            <div class="ku_fix"> 
+              {loop $hot $v}
+              <a href="#index.php?r=default/hadsearch/index&keyword={$v}">{$v}</a>
+              {/loop}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 已搜索 -->
+<div id="ajax_hadsearch" class="iscroll" style="top:46px;">
+    <div>
+        <!-- 筛选 -->
+        <div class="mod_filter">
+            <div class="ku_fix tabs">
+                <div class="tab choose">推荐</div>
+                <div class="tab">商家</div>
+                <div class="tab">服务</div>
+                <div class="tab">资讯</div>
+            </div>
+            <div class="action">
+                筛选
+            </div>
+        </div>
+        <!-- 结果列表 -->
+        <div id="pullDown">下拉可以刷新</div>
+        <div class="box_searchResults">
+            <div class="ku_fix mod_searchResults" id="listOut">
+                <!-- 商品模板 -->
+                <script id="search:goods" type="text/html">
+                <div class="list goods">
+                    <a class=" link" href="#index.php?r=default/goods/index&id=<#=goods_id#>">
+                        <div class="pic">
+                            <img src="http://shop.100msh.com/<#=default_image#>" alt="" />
+                        </div>
+                        <div class="service">
+                            <div class="title"><#=goods_name#></div>
+                            <div class="level"></div>
+                            <div class="price c_money"><span>¥</span><#=price#></div>
+                        </div>
+                    </a>
+                </div>
+                </script>
+                <!-- 店铺模板 -->
+                <script id="search:store" type="text/html">
+                <div class="list store">
+                    <a class=" link" href="#index.php?r=default/store/index&id=<#=store_id#>">
+                        <div class="title"><#=store_name#></div>
+                        <div class="level"></div>
+                        <div class="phone"><#=tel#></div>
+                    </a>
+                </div>
+                </script>
+            </div>
+        </div>
+        <div id="pullUp">上拉可以刷新</div>
+        <!-- 加载中 -->
+        
+        <!-- 结束 -->
+        <div class="mod_end">亲，没有更多了！</div>
+        
+        <!-- 没有数据 -->
+        <div class="mod_nodata">亲，您搜索的关键字暂时没有结果</div>
+    </div>
+</div>
+
+
+<!-- 商品 -->
+
+<div id="ajax_goods" class="ajax_box bg">
+
+    <div class="mod_loading"></div>
+    
+    <div class="mod_header bg_header bdc">
+        <div class="title">商品</div>
+        <div class="js_back back"></div>
+        <a class="toIndex" href="#"></a>
+        <a class="toSearch" href="#index.php?r=default/search/index"></a>
+    </div>
+    
+    <div id="goods_tabs" class="ku_fix mod_goodsTab">
+        <div class="tab comment" data-role="tab">评论<span class="bg_tab"></span></div>
+        <div class="tab base" data-role="tab">基本<span class="bg_tab"></span></div>
+        <div class="tab detail" data-role="tab">详情<span class="bg_tab"></span></div>
+    </div>
+    
+    <div id="js_goods_index_wrapper" class="iscroll" style="top:86px;">
+        <div id="ajax_goods_data" class="tab_data">
+			<script id="store:detail" type="text/html">
+            <div class="tab_wrapper">
+                <div class="tab_contents">
+                    <!-- 商家_评论 -->
+                    <div class="tab_content">
+                        <div>
+                            <div class="mod_storeComment_no">
+                                亲，暂时没有评论喔
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 商家_基本 -->
+                    <div class="tab_content">
+                        <div>
+                            <!-- 店铺图片 -->
+                            <div class="box_storePic"><img src="http://shop.100msh.com/<#=store.store_logo#>" alt=""></div>
+                            
+                            <!-- 店铺信息 -->
+                            <div class="mod_storeInfo">
+                                <div class="title"><#=store.store_name#></div>
+                                <div class="level">
+                                    <div class="star"></div>
+                                </div>
+                                <div class="address">
+                                    地址：<#=store.address#>
+                                </div>
+                                <div class="phone">
+                                    电话：<#=store.tel#>
+                                </div>
+                                <div class="contentMen">
+                                    联&ensp;系&ensp;人：<#=store.owner_name#>
+                                </div>
+                                <div class="time">
+                                    服务时间：<#=store.start_time#>-<#=store.close_time#>
+                                </div>
+                            </div>
+                            
+                            <!-- 店铺功能 -->
+                            <div class="box_storeAction">
+                                <div class="ku_fix mod_storeAction">
+                                    <a class=" phone" data-tel="<#=store.tel#>" data-srcname="cater" href="tel:<#=store.tel#>">
+                                        <div class="icon"></div>
+                                        <div class="info">致电商家</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 商品列表 -->
+                    <div class="tab_content">
+                        <div>
+                            <div id="container" class="ku_fix mod_store_goodsList">
+                                <#for(var i=0;i<goods.length;i++){#>
+                                    <div class="listBox">
+                                        <a class="list" href="#index.php?r=default/goods/index&id=<#=goods[i].goods_id#>">
+                                            <div class="picBox">
+                                                <img src="http://shop.100msh.com/<#=goods[i].default_image#>" alt="" />
+                                            </div>
+                                            <div class="name"><#=goods[i].goods_name#></div>
+                                            <div class="price"><span>¥</span><#=goods[i].price#></div>
+                                        </a>
+                                    </div> 
+                                <#}#>
+                            </div>
+                            <div class="next_page">
+                                <a href="index.php?r=default/store/goods_2">加载中...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </script>
+        </div>
+    </div>
+    
+</div>
+
+<!-- 商家 -->
+<div id="ajax_store" class="ajax_box bg">
+
+    <div class="mod_loading"></div>
+    
+    <!-- 头部 -->
+    <div class="mod_header bg_header bdc">
+        <div class="title">商家</div>
+        <div class="js_back back"></div>
+        <a class="toIndex" href="#"></a>
+        <a class="toSearch" href="#index.php?r=default/search/index"></a>
+    </div>
+    
+    <!-- 选项卡 -->
+    <div id="store_tabs" class="ku_fix mod_storeTab">
+        <div class="tab comment" data-role="tab">评论<span class="bg_tab"></span></div>
+        <div class="tab base" data-role="tab">基本<span class="bg_tab"></span></div>
+        <div class="tab goods" data-role="tab">商品<span class="bg_tab"></span></div>
+    </div>
+    
+    <!-- 内容 -->
+    <div id="js_store_index_wrapper" class="iscroll" style="top:86px;">
+        <div id="ajax_store_data" class="tab_data">
+			<script id="goods:detail" type="text/html">
+            <div class="tab_wrapper">
+                <div class="tab_contents">
+                    <!-- 商品_评论 -->
+                    <div class="tab_content">
+                        <div>
+                            <div class="mod_goodsComment_no">
+                                亲，暂时没有评论喔
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 商品_基本 -->
+                    <div class="tab_content">
+                        <div> 
+                            <!-- 商品图片 -->
+                            <div class="box_goodsPic" >
+                                <img src="http://shop.100msh.com/<#=default_image#>" alt="">
+                            </div>
+                            
+                            <!-- 商品信息 -->
+                            <div class="mod_goodsInfo">
+                                <div class="title"><#=goods_name#></div>
+                                <div class="level">
+                                    <div class="star"></div>
+                                </div>
+                                <div class="price c_money"><span>¥</span><#=price#></div>
+                                <div class="slogn"><#=tags#></div>
+                            </div>
+                            
+                            <!-- 商品功能 -->
+                            <div class="box_goodsAction">
+                                <div class="ku_fix mod_goodsAction">
+                                    <a class=" phone" data-tel="4006660598" data-srcname="cater" href="tel:4006660598">
+                                        <div class="icon"></div>
+                                        <div class="info">电话订购</div>
+                                    </a>
+                                    <a class=" tostore" href="#index.php?r=default/store/index&id=<#=store_id#>">
+                                        <div class="icon"></div>
+                                        <div class="info">商家首页</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 商品_详情 -->
+                    <div class="tab_content">
+                        <div>
+                            <div class="mod_goodsDetail">
+                                <#=description#>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </script>
+        </div>
+    </div>
+    
+</div>
+
+
+<div id="new_page_loading" style="display:none;position:absolute;width:100%;top:0;bottom:0;z-index:999;">数据加载中...</div>
+
+<script src="__PUBLIC__/__js__/jquery-2.0.2.min.js"></script>
+<script src="__PUBLIC__/__js__/baiduTemplate.min.js"></script>
+<script src="__PUBLIC__/__js__/jquery-ba-bbq.min.js"></script>
+<script src="__PUBLIC__/__js__/iscroll.js"></script>
+<script src="__PUBLICAPP__/js/load-data.js"></script>
+
+</body>
+</html>

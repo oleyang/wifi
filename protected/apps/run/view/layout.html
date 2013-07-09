@@ -1,0 +1,565 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>跑腿平台</title>
+
+<!-- 让所有ie浏览器以ie8文档模式显示 -->
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
+<!-- 禁止手机的页面缩放功能 -->
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js">IE6,7,8支持HTML5元素</script>
+<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js">IE6,7,8支持媒体查询</script>
+<script src="__PUBLICAPP__/js/selectivizr-min.js">IE6,7,8支持CSS3选择器</script>
+<![endif]-->
+<script src="__PUBLICAPP__/js/do.min.js" data-cfg-corelib="__PUBLICAPP__/js/jquery-1.7.1.min.js"></script>
+<link rel="shortcut icon" href="__PUBLICAPP__/images/favicon.ico">
+<link type="text/css" rel="stylesheet" href="__PUBLICAPP__/css/base.css">
+<link type="text/css" rel="stylesheet" href="__PUBLICAPP__/css/userCenter.css">
+<link type="text/css" rel="stylesheet" href="__PUBLICAPP__/css/index.css">
+<script type="text/javascript">
+/*
+第一步：建立一个模块库，并明确互相的依赖关系。
+Do.add('模块名称（自己随便取名）', {path: '路径', type: '文件类型（js/css）', requires: ['依赖（模块名，可以是js也可以是css）']});
+*/
+Do.add('bbq-js', {path: '__PUBLICAPP__/js/jquery-ba-bbq.min.js', type: 'js'});
+Do.add('isotope-js', {path: '__PUBLICAPP__/js/jquery-isotope.min.js', type: 'js'});
+Do.add('imgReady-js', {path: '__PUBLICAPP__/js/imgReady.js', type: 'js'});
+Do.add('iscroll-js', {path: '__PUBLICAPP__/js/iscroll.js', type: 'js'});
+Do.add('index-css', {path: '__PUBLICAPP__/css/index.css', type: 'css'});
+Do.add('store-css', {path: '__PUBLICAPP__/css/store.css', type: 'css'});
+Do.add('path-css', {path: '__PUBLICAPP__/css/path.css', type: 'css'});
+Do.add('userCenter-css', {path: '__PUBLICAPP__/css/userCenter.css', type: 'css'});
+Do.add('footer-css', {path: '__PUBLICAPP__/css/footer.css', type: 'css'});
+</script>
+<script type="text/javascript">
+Do('bbq-js', 'store-css', 'path-css',function(){
+	(function($) {
+		$(function(){
+
+////////////// 整体框架 开始
+			// 整体框架右移动，显示用户中心导航
+			function box_nowSite_move(){
+				$(".box_nowSite").animate({left: '246'}, 300);
+			}
+			
+			// 整体框架回来，覆盖用户中心导航
+			function box_nowSite_back(){
+				$(".box_nowSite").animate({left: '0'}, 300);
+			}
+			// 整体框架 结束
+
+
+////////////// 操作主功能按钮 开始
+			
+			// 主功能按钮到最246
+			function mod_option_246(){
+				$(".mod_option").animate({left: '246'}, 300);
+			}
+					
+			// 主功能按钮回来2
+			function mod_option_back(){
+				$(".mod_option").animate({left: '0'}, 300);
+			}
+			
+			$(".mod_option").bind('click',function(){ //mousedown
+				// 判断 主功能按钮位置
+				var pos_0_option = ( $(".mod_option").css("left") == "0px" );
+				var pos_246_option = ( $(".mod_option").css("left") == "246px" );
+				if( pos_0_option ){
+					mod_option_246();
+					box_nowSite_move();
+				}
+				else if(pos_246_option)
+				{
+					mod_option_back();
+					box_nowSite_back();
+					$("#ajax_userCenter").hide();	
+				}
+			});
+	
+			
+			// 操作主功能按钮 结束
+			
+			
+////////////// 显示用户中心数据 第一种情况
+			function show_ajax_userCenter(){
+				$( 'a[href^=#]' ).each(function() {
+                    var that = $(this);
+					that.bind('click',function(){
+						
+						// 判断 a 标记链接中的模块是否是userCenter
+						var href = that.attr('href');
+						var mod = href.replace( /^#/, '' ).split("/")[1];
+						var mod_userCenter_href = ( mod == 'userCenter' );
+						
+						// 判断 用户中心内容模块是否隐藏
+						var isShow_userCenter = ( $("#ajax_userCenter").css('display') == 'none');
+						
+						// 显示用户中心数据
+						if ( mod_userCenter_href && ( isShow_userCenter ) )
+						{
+							$("#ajax_userCenter").show();
+						}
+						
+						// 判断 主功能按钮
+						var pos_0_option = ( $(".mod_option").css("right") == "0px" );
+						if ( mod_userCenter_href && ( !pos_0_option ) )
+						{
+							mod_option_246();
+						}
+					
+					});
+                });
+			}
+			show_ajax_userCenter();
+			
+
+////////////// ajax加载页面 开始
+			var cache = {
+				'': $('.bbq-default')
+			};
+			
+			$(window).bind( 'hashchange', function(e) {
+				// 得到#号后面的内容
+				var url = $.param.fragment();
+				// 得到模块名
+				var mod = url.split("/")[1];
+				// 得到页面名
+				var page  = url.split("/")[2];
+				
+				
+				// 去除所有以#好开头的a标签的选定状态
+				$( 'a[href^=#].choose' ).removeClass( 'choose' );
+				// 给与当前url匹配的a标签添加选定状态
+				url && $( 'a[href="#' + url + '"]' ).addClass( 'choose' );
+				
+				// 判断 hash 的模块是否是userCenter
+				var mod_userCenter_url = ( mod == 'userCenter' );
+				if( mod_userCenter_url )
+				{
+					// 显示用户中心数据 第二种情况
+					// 判断 用户中心内容模块是否隐藏
+					var isShow_userCenter = ( $("#ajax_userCenter").css('display') == 'none');
+					if( isShow_userCenter ){
+						box_nowSite_move();
+						$("#ajax_userCenter").show();
+						mod_option_246();
+					}
+
+					// 当模块名不是userCenter时，隐藏当前显示的内容
+					var ajax_content = $( 'div[id^=ajax_userCenter]' ).children('.bbq-item');
+					if( ajax_content.length > 0 ){
+						ajax_content.hide();
+					}
+
+
+				}
+				else
+				{
+					// 判断 用户中心内容模块是否隐藏
+					var isShow_userCenter = ( $("#ajax_userCenter").css('display') == 'none');
+					if( !isShow_userCenter ){
+						$("#ajax_userCenter").hide();
+					}
+
+					// 当模块名不是userCenter时，隐藏当前显示的内容
+					var ajax_content = $( 'div[id^=ajax_]' ).children('.bbq-item');
+					if( ajax_content.length > 0 ){
+						ajax_content.hide();
+					}
+					
+				}
+				
+				// 如果 url 已经缓存，则显示对应的内容
+				if ( cache[ url ] ) {
+					if(mod == undefined)
+					{
+						//alert('无hash');
+						var state = '#index.php?r=run/index/main'
+						$.bbq.pushState( state );
+
+						
+						// 判断 整体框架位置
+						var pos_0_nowSite = ( $(".box_nowSite").css("left") == "0px" );
+						if ( !pos_0_nowSite )
+						{
+							box_nowSite_back();
+						}
+						
+						// 判断 主功能按钮位置
+						var pos_0_option = ( $(".mod_option").css("left") == "0px" );
+						if ( !pos_0_option )
+						{
+							mod_option_back();
+						}
+
+						// 判断 用户中心内容模块是否隐藏
+						var isShow_userCenter = ( $("#ajax_userCenter").css('display') == 'none');
+						if( !isShow_userCenter ){
+							$("#ajax_userCenter").hide();
+						}
+						
+						return;
+					}
+					//alert('显示缓存页面');
+					cache[ url ].show();
+					ajax_update(mod + '/' + page);
+				} 
+				// 否则在知道的 div 中载入新的内容
+				else 
+				{
+					//alert('载入新页面');
+					// 判断 欢迎模块是否显示
+					var isShow_welcome = ( $(".box_welcome").css('display') == 'none');
+					if(isShow_welcome)
+					{
+						$( '#ajax_' + mod ).find('.mod_loading').show();
+					}
+					cache[ url ] = $( '<div class="bbq-item"/>' )
+						.appendTo( '#ajax_' + mod )
+						.load( url, function(){
+							$('.box_welcome').delay(300).fadeOut();
+							$( '#ajax_' + mod ).find('.mod_loading').delay(300).fadeOut();
+						});
+				}
+			})
+			
+			$(window).trigger( 'hashchange' );
+			// ajax加载页面 结束
+
+////////////// ajax 根据路径更新对应页面的内容 开始
+			function ajax_update(e){
+				switch(e)
+				{ 
+					case 'userCenter/index':
+					//alert(e);
+					break;
+					
+					default:
+					break;
+				}
+			}
+			// ajax 根据路径更新对应页面的内容 结束
+					
+		});
+	})(jQuery);
+});
+</script>
+
+</head>
+<body>
+{include file="$__template_file"}
+<!-- 用户中心 -->
+<div class="mod_userCenter_nav">
+	<div class="mod_userCenter_nav_user">
+        <div id="js_open_login_register" class="mod_userCenter_nav_nologin">
+            <div class="photo"><img src="__PUBLICAPP__/images/userCenter/noPhoto.png" alt="" /></div>
+            <div class="photoCover"></div>
+			<div class="login">账号登录</div>
+            <div class="loginCover">
+                <div class="to"></div>
+            </div>
+        </div>
+        <a class="mod_userCenter_nav_logined" href="#index.php?r=run/userCenter/index">
+            <div class="photo"><img src="__PUBLICAPP__/pic/userCenter/photo.jpg" alt="" /></div>
+            <div class="photoCover"></div>
+            <div class="name">pigongting</div>
+            <div class="nameCover">
+                <div class="to"></div>
+            </div>
+        </a>
+    </div>
+    <div id="js_wrapper" class="box_userCenter_nav_list">
+        <div class="mod_userCenter_nav_list">
+            <div class="aboutSite">
+                <a href="#index.php?r=run/userCenter/change" class="csss change"></a>
+                <a href="#index.php?r=run/userCenter/sitemap" class="csss sitemap"></a>
+            </div>
+            <div class="shopping">
+                <div class="csss shopping_title"></div>
+                <a href="#index.php?r=run?r=run/userCenter/cart" class="csss cart"></a>
+                <a href="#index.php?r=run/userCenter/order" class="csss order"></a>
+                <a href="#index.php?r=run/userCenter/coupon" class="csss coupon"></a>
+                <a href="#index.php?r=run/userCenter/love" class="csss love"></a>
+                <a href="#index.php?r=run/userCenter/history" class="csss history"></a>
+                <a href="#index.php?r=run/userCenter/address" class="csss address"></a>
+            </div>
+            <div class="chat">
+                <div class="csss chat_title"></div>
+                <a href="#index.php?r=run/userCenter/message" class="csss message">
+                    <div id="ajax_message" class="tips">200</div>
+                </a>
+                <a href="#index.php?r=run/userCenter/friend" class="csss friend"></a>
+            </div>
+            <div class="setting">
+                <div class="csss setting_title"></div>
+                <a href="#index.php?r=run/userCenter/set" class="csss set"></a>
+                <a href="#index.php?r=run/userCenter/help" class="csss help"></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 滚动条 开始 -->
+<script type="text/javascript" src="__PUBLICAPP__/js/iscroll.js"></script>
+<script type="text/javascript">
+var myScroll;
+function loaded() {
+	myScroll = new iScroll('js_wrapper');
+}
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+</script>
+<!-- 滚动条 结束 -->
+<!-- 弹出框 -->
+<!-- 登录和注册弹出框 -->
+<div id="box_login_register" class="js_open">
+
+	<div class="mod_login_register">
+		
+        <!-- 关闭按钮 -->
+    	<div class="js_close">×</div>
+        
+		<!-- 登录模块 -->
+        <div class="mod_login">
+            <div class="login">
+                <div class="title">登录社区服务平台</div>
+                <div class="login_items">
+                	<div class="item">
+                    	<div class="title">账号</div>
+                        <div class="inputbox"><input type="text" value="手机号/邮箱/用户名" /></div>
+                    </div>
+                	<div class="item">
+                    	<div class="title">密码</div>
+                        <div class="inputbox"><input type="text" value="" /></div>
+                    </div>
+                	<div class="item">
+                    	<div class="title">验证码</div>
+                        <div class="inputbox"><input type="text" value="" /></div>
+                        <div class="code"><img src="__PUBLICAPP__/images/text/code.png" alt="" /></div>
+                    </div>
+                </div>
+                <div class="rememberpassword"><span></span>自动登录</div>
+                <div id="js_toLogin" class="tologin">立即登录<span></span></div>
+                <div class="ku_fix accident">
+                    <div class="js_to_password">忘记密码？</div>
+                    <div class="js_to_register">没有账号，立即注册！</div>
+                </div>
+            </div>
+            <div class="slogn">
+                <div class="welcome">
+                    <div>现在加入百米生活，结识更多志趣相投之人，</div>
+                    <div>无论你来自哪里，有什么兴趣爱好，都能在这里找到和你一样特别的人。</div>
+                </div>
+                <div class="weHave">
+                    <div class="strong">33万个兴趣小组&emsp;853个城市&emsp;7196万居民 </div>
+                    <div>111199个小站&ensp;24957个独立音乐人&ensp;4107个作者译者&ensp;2710家电影院</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 注册模块 -->
+        <div class="mod_register">
+            <div class="register">
+                <div class="title">欢迎加入社区服务平台</div>
+                <div class="register_items">
+                	<div class="item">
+                    	<div class="title">账号</div>
+                        <div class="inputbox"><input type="text" value="手机号/邮箱/用户名" /></div>
+                    </div>
+                	<div class="item">
+                    	<div class="title">密码</div>
+                        <div class="inputbox"><input type="text" value="" /></div>
+                    </div>
+                	<div class="item">
+                    	<div class="title">验证码</div>
+                        <div class="inputbox"><input type="text" value="" /></div>
+                        <div class="code"><img src="__PUBLICAPP__/images/text/code.png" alt="" /></div>
+                    </div>
+                </div>
+                <div class="agreement"><span></span>我已经认真阅读并同意百米的《使用协议》</div>
+                <div class="tologin">立即注册<span></span></div>
+                <div class="ku_fix accident">
+                    <div class="js_to_password">忘记密码？</div>
+                    <div class="js_to_login">我有账号，立即登录！</div>
+                </div>
+            </div>
+            <div class="slogn">
+                <div class="welcome">
+                    <div>现在加入百米生活，结识更多志趣相投之人，</div>
+                    <div>无论你来自哪里，有什么兴趣爱好，都能在这里找到和你一样特别的人。</div>
+                </div>
+                <div class="weHave">
+                    <div class="strong">33万个兴趣小组&emsp;853个城市&emsp;7196万居民 </div>
+                    <div>111199个小站&ensp;24957个独立音乐人&ensp;4107个作者译者&ensp;2710家电影院</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 忘记密码 -->
+        <div class="mod_password">
+            <div class="password">
+                <div class="title">
+                	<div>密码</div>
+                	<div class="list">通过手机找回</div>
+                    <div class="list choose">通过邮箱找回</div>
+                </div>
+                
+                <div class="items">
+                    <div class="password_items">
+                        <div class="item">
+                            <div class="title">邮箱</div>
+                            <div class="inputbox"><input type="text" value="" /></div>
+                        </div>
+                        <div class="item">
+                            <div class="title">验证码</div>
+                            <div class="inputbox"><input type="text" value="" /></div>
+                            <div class="code"><img src="__PUBLICAPP__/images/text/code.png" alt="" /></div>
+                        </div>
+                    </div>
+                    <div class="password_items" style="display:none;">
+                        <div class="item">
+                            <div class="title">手机</div>
+                            <div class="inputbox"><input type="text" value="" /></div>
+                        </div>
+                        <div class="item">
+                            <div class="title">验证码</div>
+                            <div class="inputbox"><input type="text" value="" /></div>
+                            <div class="getcode">获取验证码</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tologin">找回密码<span></span></div>
+                <div class="ku_fix accident">
+                    <div class="js_to_login">想起了密码，立即登录！</div>
+                    <div class="js_to_register">没有账号，立即注册！</div>
+                </div>
+            </div>
+            <div class="slogn">
+                <div class="welcome">
+                    <div>现在加入百米生活，结识更多志趣相投之人，</div>
+                    <div>无论你来自哪里，有什么兴趣爱好，都能在这里找到和你一样特别的人。</div>
+                </div>
+                <div class="weHave">
+                    <div class="strong">33万个兴趣小组&emsp;853个城市&emsp;7196万居民 </div>
+                    <div>111199个小站&ensp;24957个独立音乐人&ensp;4107个作者译者&ensp;2710家电影院</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+<!-- 电话订购 -->
+<div id="box_orderByPhone" class="js_open">
+	<div class="mod_orderByPhone">
+        <div class="js_close">×</div>
+        1. 拨打服务热线：400 666 2598
+    </div>
+</div>
+<!-- 搜索弹出框 -->
+<script type="text/javascript">
+Do('footer-css' ,function(){
+	(function($) {
+		$(function(){
+
+////////////// 打开对应弹出框			
+			$( '[id^=js_open_]' ).click( function(){
+				$this = $(this);
+				var aa = $this.attr('id');
+				aa = aa.replace(/.*?js_open_/, '').replace(/\s+.*/, '')
+				$('#box_'+ aa ).fadeIn();
+            });
+			$('.js_close').click( function(){
+				$this = $(this);
+				$this.parents('.js_open').fadeOut();
+			});
+
+			$('#js_toLogin').click(function(){
+				$this = $(this);
+				$this.parents('.js_open').fadeOut();
+				loginSuccess();
+			});
+			
+			$('.js_to_register').click(function(){
+				toRegister();
+			});
+			
+			$('.js_to_login').click(function(){
+				toLogin();
+			});
+
+			$('.js_to_password').click(function(){
+				toPassword();
+			});
+
+////////////// 登录成功后，用户块的动画
+			function loginSuccess(){
+				$('.mod_userCenter_nav_nologin').animate({
+					top: '-74'
+				},500);
+				$('.mod_userCenter_nav_logined').animate({
+					top: '0'
+				},500);				
+			}
+
+////////////// 滑到登录模块
+			function toLogin(){
+				$('.mod_login').animate({
+					top: '0',
+					opacity:'1'
+				},400);
+				$('.mod_register').animate({
+					top: '358',
+					opacity:'0'					
+				},400);				
+				$('.mod_password').animate({
+					top: '716',
+					opacity:'0'					
+				},400);				
+				
+			}
+
+////////////// 滑到注册模块
+			function toRegister(){
+				$('.mod_register').animate({
+					top: '0',
+					opacity:'1'
+				},400);
+				$('.mod_password').animate({
+					top: '358',
+					opacity:'0'					
+				},400);				
+				$('.mod_login').animate({
+					top: '-358',
+					opacity:'0'					
+				},400);				
+			}
+
+////////////// 滑到忘记密码
+			function toPassword(){
+				$('.mod_password').animate({
+					top: '0',
+					opacity:'1'
+				},400);
+				$('.mod_login').animate({
+					top: '-716',
+					opacity:'0'					
+				},400);				
+				$('.mod_register').animate({
+					top: '-358',
+					opacity:'0'					
+				},400);				
+				
+			}
+					
+		});
+	})(jQuery);
+});
+</script>
+
+</body>
+</html>

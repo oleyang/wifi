@@ -1,0 +1,16 @@
+<?php
+class storeModel extends baseModel
+{
+    protected $table = 'store';
+
+    function __construct(  )
+    {
+        parent::__construct(  );
+    }
+
+    function getInfoByGID( $gid )
+    {
+    $this->    
+    }
+    
+}

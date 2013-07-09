@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>跑腿平台</title>
+
+<!-- 让所有ie浏览器以ie8文档模式显示 -->
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
+<!-- 禁止手机的页面缩放功能 -->
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js">IE6,7,8支持HTML5元素</script>
+<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js">IE6,7,8支持媒体查询</script>
+<script src="{{$__PUBLIC__}}/js/selectivizr-min.js">IE6,7,8支持CSS3选择器</script>
+<![endif]-->
+<script src="{{$__PUBLIC__}}/js/do.min.js" data-cfg-corelib="{{$__PUBLIC__}}/js/jquery-1.7.1.min.js"></script>
+<link rel="shortcut icon" href="{{$__PUBLIC__}}/images/favicon.ico">
+<link type="text/css" rel="stylesheet" href="{{$__PUBLIC__}}/css/base.css">
+<link type="text/css" rel="stylesheet" href="{{$__PUBLIC__}}/css/userCenter.css">
+<link type="text/css" rel="stylesheet" href="{{$__PUBLIC__}}/css/index.css">
+<script type="text/javascript">
+/*
+第一步：建立一个模块库，并明确互相的依赖关系。
+Do.add('模块名称（自己随便取名）', {path: '路径', type: '文件类型（js/css）', requires: ['依赖（模块名，可以是js也可以是css）']});
+*/
+Do.add('bbq-js', {path: '{{$__PUBLIC__}}/js/jquery-ba-bbq.min.js', type: 'js'});
+Do.add('isotope-js', {path: '{{$__PUBLIC__}}/js/jquery-isotope.min.js', type: 'js'});
+Do.add('imgReady-js', {path: '{{$__PUBLIC__}}/js/imgReady.js', type: 'js'});
+Do.add('iscroll-js', {path: '{{$__PUBLIC__}}/js/iscroll.js', type: 'js'});
+Do.add('index-css', {path: '{{$__PUBLIC__}}/css/index.css', type: 'css'});
+Do.add('store-css', {path: '{{$__PUBLIC__}}/css/store.css', type: 'css'});
+Do.add('path-css', {path: '{{$__PUBLIC__}}/css/path.css', type: 'css'});
+Do.add('userCenter-css', {path: '{{$__PUBLIC__}}/css/userCenter.css', type: 'css'});
+Do.add('footer-css', {path: '{{$__PUBLIC__}}/css/footer.css', type: 'css'});
+</script>
+<script type="text/javascript">
+Do('bbq-js', 'store-css', 'path-css',function(){
+	(function($) {
+		$(function(){
+
+////////////// 整体框架 开始
+			// 整体框架右移动，显示用户中心导航
+			function box_nowSite_move(){
+				$(".box_nowSite").animate({left: '246'}, 300);
+			}
+			
+			// 整体框架回来，覆盖用户中心导航
+			function box_nowSite_back(){
+				$(".box_nowSite").animate({left: '0'}, 300);
+			}
+			// 整体框架 结束
+
+
+////////////// 操作主功能按钮 开始
+			
+			// 主功能按钮到最246
+			function mod_option_246(){
+				$(".mod_option").animate({left: '246'}, 300);
+			}
+					
+			// 主功能按钮回来2
+			function mod_option_back(){
+				$(".mod_option").animate({left: '0'}, 300);
+			}
+			
+			$(".mod_option").bind('click',function(){ //mousedown
+				// 判断 主功能按钮位置
+				var pos_0_option = ( $(".mod_option").css("left") == "0px" );
+				var pos_246_option = ( $(".mod_option").css("left") == "246px" );
+				if( pos_0_option ){
+					mod_option_246();
+					box_nowSite_move();
+				}
+				else if(pos_246_option)
+				{
+					mod_option_back();
+					box_nowSite_back();
+					$("#ajax_userCenter").hide();	
+				}
+			});
+	
+			
+			// 操作主功能按钮 结束
+			
+			
+////////////// 显示用户中心数据 第一种情况
+			function show_ajax_userCenter(){
+				$( 'a[href^=#]' ).each(function() {
+                    var that = $(this);
+					that.bind('click',function(){
+						
+						// 判断 a 标记链接中的模块是否是userCenter
+						var href = that.attr('href');
+						var mod = href.replace( /^#/, '' ).split("/")[1];
+						var mod_userCenter_href = ( mod == 'userCenter' );
+						
+						// 判断 用户中心内容模块是否隐藏
+						var isShow_userCenter = ( $("#ajax_userCenter").css('display') == 'none');
+						
+						// 显示用户中心数据
+						if ( mod_userCenter_href && ( isShow_userCenter ) )
+						{
+							$("#ajax_userCenter").show();
+						}
+						
+						// 判断 主功能按钮
+						var pos_0_option = ( $(".mod_option").css("right") == "0px" );
+						if ( mod_userCenter_href && ( !pos_0_option ) )
+						{
+							mod_option_246();
+						}
+					
+					});
+                });
+			}
+			show_ajax_userCenter();
+			
+
+////////////// ajax加载页面 开始
+			var cache = {
+				'': $('.bbq-default')
+			};
+			
+			$(window).bind( 'hashchange', function(e) {
+				// 得到#号后面的内容
+				var url = $.param.fragment();
+				// 得到模块名
+				var mod = url.split("/")[1];
+				// 得到页面名
+				var page  = url.split("/")[2];
+				
+				
+				// 去除所有以#好开头的a标签的选定状态
+				$( 'a[href^=#].choose' ).removeClass( 'choose' );
+				// 给与当前url匹配的a标签添加选定状态
+				url && $( 'a[href="#' + url + '"]' ).addClass( 'choose' );
+				
+				// 判断 hash 的模块是否是userCenter
+				var mod_userCenter_url = ( mod == 'userCenter' );
+				if( mod_userCenter_url )
+				{
+					// 显示用户中心数据 第二种情况
+					// 判断 用户中心内容模块是否隐藏
+					var isShow_userCenter = ( $("#ajax_userCenter").css('display') == 'none');
+					if( isShow_userCenter ){
+						box_nowSite_move();
+						$("#ajax_userCenter").show();
+						mod_option_246();
+					}
+
+					// 当模块名不是userCenter时，隐藏当前显示的内容
+					var ajax_content = $( 'div[id^=ajax_userCenter]' ).children('.bbq-item');
+					if( ajax_content.length > 0 ){
+						ajax_content.hide();
+					}
+
+
+				}
+				else
+				{
+					// 判断 用户中心内容模块是否隐藏
+					var isShow_userCenter = ( $("#ajax_userCenter").css('display') == 'none');
+					if( !isShow_userCenter ){
+						$("#ajax_userCenter").hide();
+					}
+
+					// 当模块名不是userCenter时，隐藏当前显示的内容
+					var ajax_content = $( 'div[id^=ajax_]' ).children('.bbq-item');
+					if( ajax_content.length > 0 ){
+						ajax_content.hide();
+					}
+					
+				}
+				
+				// 如果 url 已经缓存，则显示对应的内容
+				if ( cache[ url ] ) {
+					if(mod == undefined)
+					{
+						//alert('无hash');
+						var state = '#index.php/index/main'
+						$.bbq.pushState( state );
+
+						
+						// 判断 整体框架位置
+						var pos_0_nowSite = ( $(".box_nowSite").css("left") == "0px" );
+						if ( !pos_0_nowSite )
+						{
+							box_nowSite_back();
+						}
+						
+						// 判断 主功能按钮位置
+						var pos_0_option = ( $(".mod_option").css("left") == "0px" );
+						if ( !pos_0_option )
+						{
+							mod_option_back();
+						}
+
+						// 判断 用户中心内容模块是否隐藏
+						var isShow_userCenter = ( $("#ajax_userCenter").css('display') == 'none');
+						if( !isShow_userCenter ){
+							$("#ajax_userCenter").hide();
+						}
+						
+						return;
+					}
+					//alert('显示缓存页面');
+					cache[ url ].show();
+					ajax_update(mod + '/' + page);
+				} 
+				// 否则在知道的 div 中载入新的内容
+				else 
+				{
+					//alert('载入新页面');
+					// 判断 欢迎模块是否显示
+					var isShow_welcome = ( $(".box_welcome").css('display') == 'none');
+					if(isShow_welcome)
+					{
+						$( '#ajax_' + mod ).find('.mod_loading').show();
+					}
+					cache[ url ] = $( '<div class="bbq-item"/>' )
+						.appendTo( '#ajax_' + mod )
+						.load( url, function(){
+							$('.box_welcome').delay(300).fadeOut();
+							$( '#ajax_' + mod ).find('.mod_loading').delay(300).fadeOut();
+						});
+				}
+			})
+			
+			$(window).trigger( 'hashchange' );
+			// ajax加载页面 结束
+
+////////////// ajax 根据路径更新对应页面的内容 开始
+			function ajax_update(e){
+				switch(e)
+				{ 
+					case 'userCenter/index':
+					//alert(e);
+					break;
+					
+					default:
+					break;
+				}
+			}
+			// ajax 根据路径更新对应页面的内容 结束
+					
+		});
+	})(jQuery);
+});
+</script>
+
+</head>
+<body>

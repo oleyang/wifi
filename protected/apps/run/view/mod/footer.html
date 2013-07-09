@@ -1,0 +1,250 @@
+<!-- 弹出框 -->
+<!-- 登录和注册弹出框 -->
+<div id="box_login_register" class="js_open">
+
+	<div class="mod_login_register">
+		
+        <!-- 关闭按钮 -->
+    	<div class="js_close">×</div>
+        
+		<!-- 登录模块 -->
+        <div class="mod_login">
+            <div class="login">
+                <div class="title">登录社区服务平台</div>
+                <div class="login_items">
+                	<div class="item">
+                    	<div class="title">账号</div>
+                        <div class="inputbox"><input type="text" value="手机号/邮箱/用户名" /></div>
+                    </div>
+                	<div class="item">
+                    	<div class="title">密码</div>
+                        <div class="inputbox"><input type="text" value="" /></div>
+                    </div>
+                	<div class="item">
+                    	<div class="title">验证码</div>
+                        <div class="inputbox"><input type="text" value="" /></div>
+                        <div class="code"><img src="{{$__PUBLIC__}}/images/text/code.png" alt="" /></div>
+                    </div>
+                </div>
+                <div class="rememberpassword"><span></span>自动登录</div>
+                <div id="js_toLogin" class="tologin">立即登录<span></span></div>
+                <div class="ku_fix accident">
+                    <div class="js_to_password">忘记密码？</div>
+                    <div class="js_to_register">没有账号，立即注册！</div>
+                </div>
+            </div>
+            <div class="slogn">
+                <div class="welcome">
+                    <div>现在加入百米生活，结识更多志趣相投之人，</div>
+                    <div>无论你来自哪里，有什么兴趣爱好，都能在这里找到和你一样特别的人。</div>
+                </div>
+                <div class="weHave">
+                    <div class="strong">33万个兴趣小组&emsp;853个城市&emsp;7196万居民 </div>
+                    <div>111199个小站&ensp;24957个独立音乐人&ensp;4107个作者译者&ensp;2710家电影院</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 注册模块 -->
+        <div class="mod_register">
+            <div class="register">
+                <div class="title">欢迎加入社区服务平台</div>
+                <div class="register_items">
+                	<div class="item">
+                    	<div class="title">账号</div>
+                        <div class="inputbox"><input type="text" value="手机号/邮箱/用户名" /></div>
+                    </div>
+                	<div class="item">
+                    	<div class="title">密码</div>
+                        <div class="inputbox"><input type="text" value="" /></div>
+                    </div>
+                	<div class="item">
+                    	<div class="title">验证码</div>
+                        <div class="inputbox"><input type="text" value="" /></div>
+                        <div class="code"><img src="{{$__PUBLIC__}}/images/text/code.png" alt="" /></div>
+                    </div>
+                </div>
+                <div class="agreement"><span></span>我已经认真阅读并同意百米的《使用协议》</div>
+                <div class="tologin">立即注册<span></span></div>
+                <div class="ku_fix accident">
+                    <div class="js_to_password">忘记密码？</div>
+                    <div class="js_to_login">我有账号，立即登录！</div>
+                </div>
+            </div>
+            <div class="slogn">
+                <div class="welcome">
+                    <div>现在加入百米生活，结识更多志趣相投之人，</div>
+                    <div>无论你来自哪里，有什么兴趣爱好，都能在这里找到和你一样特别的人。</div>
+                </div>
+                <div class="weHave">
+                    <div class="strong">33万个兴趣小组&emsp;853个城市&emsp;7196万居民 </div>
+                    <div>111199个小站&ensp;24957个独立音乐人&ensp;4107个作者译者&ensp;2710家电影院</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 忘记密码 -->
+        <div class="mod_password">
+            <div class="password">
+                <div class="title">
+                	<div>密码</div>
+                	<div class="list">通过手机找回</div>
+                    <div class="list choose">通过邮箱找回</div>
+                </div>
+                
+                <div class="items">
+                    <div class="password_items">
+                        <div class="item">
+                            <div class="title">邮箱</div>
+                            <div class="inputbox"><input type="text" value="" /></div>
+                        </div>
+                        <div class="item">
+                            <div class="title">验证码</div>
+                            <div class="inputbox"><input type="text" value="" /></div>
+                            <div class="code"><img src="{{$__PUBLIC__}}/images/text/code.png" alt="" /></div>
+                        </div>
+                    </div>
+                    <div class="password_items" style="display:none;">
+                        <div class="item">
+                            <div class="title">手机</div>
+                            <div class="inputbox"><input type="text" value="" /></div>
+                        </div>
+                        <div class="item">
+                            <div class="title">验证码</div>
+                            <div class="inputbox"><input type="text" value="" /></div>
+                            <div class="getcode">获取验证码</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tologin">找回密码<span></span></div>
+                <div class="ku_fix accident">
+                    <div class="js_to_login">想起了密码，立即登录！</div>
+                    <div class="js_to_register">没有账号，立即注册！</div>
+                </div>
+            </div>
+            <div class="slogn">
+                <div class="welcome">
+                    <div>现在加入百米生活，结识更多志趣相投之人，</div>
+                    <div>无论你来自哪里，有什么兴趣爱好，都能在这里找到和你一样特别的人。</div>
+                </div>
+                <div class="weHave">
+                    <div class="strong">33万个兴趣小组&emsp;853个城市&emsp;7196万居民 </div>
+                    <div>111199个小站&ensp;24957个独立音乐人&ensp;4107个作者译者&ensp;2710家电影院</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+<!-- 电话订购 -->
+<div id="box_orderByPhone" class="js_open">
+	<div class="mod_orderByPhone">
+        <div class="js_close">×</div>
+        1. 拨打服务热线：400 666 2598
+    </div>
+</div>
+<!-- 搜索弹出框 -->
+<script type="text/javascript">
+Do('footer-css' ,function(){
+	(function($) {
+		$(function(){
+
+////////////// 打开对应弹出框			
+			$( '[id^=js_open_]' ).click( function(){
+				$this = $(this);
+				var aa = $this.attr('id');
+				aa = aa.replace(/.*?js_open_/, '').replace(/\s+.*/, '')
+				$('#box_'+ aa ).fadeIn();
+            });
+			$('.js_close').click( function(){
+				$this = $(this);
+				$this.parents('.js_open').fadeOut();
+			});
+
+			$('#js_toLogin').click(function(){
+				$this = $(this);
+				$this.parents('.js_open').fadeOut();
+				loginSuccess();
+			});
+			
+			$('.js_to_register').click(function(){
+				toRegister();
+			});
+			
+			$('.js_to_login').click(function(){
+				toLogin();
+			});
+
+			$('.js_to_password').click(function(){
+				toPassword();
+			});
+
+////////////// 登录成功后，用户块的动画
+			function loginSuccess(){
+				$('.mod_userCenter_nav_nologin').animate({
+					top: '-74'
+				},500);
+				$('.mod_userCenter_nav_logined').animate({
+					top: '0'
+				},500);				
+			}
+
+////////////// 滑到登录模块
+			function toLogin(){
+				$('.mod_login').animate({
+					top: '0',
+					opacity:'1'
+				},400);
+				$('.mod_register').animate({
+					top: '358',
+					opacity:'0'					
+				},400);				
+				$('.mod_password').animate({
+					top: '716',
+					opacity:'0'					
+				},400);				
+				
+			}
+
+////////////// 滑到注册模块
+			function toRegister(){
+				$('.mod_register').animate({
+					top: '0',
+					opacity:'1'
+				},400);
+				$('.mod_password').animate({
+					top: '358',
+					opacity:'0'					
+				},400);				
+				$('.mod_login').animate({
+					top: '-358',
+					opacity:'0'					
+				},400);				
+			}
+
+////////////// 滑到忘记密码
+			function toPassword(){
+				$('.mod_password').animate({
+					top: '0',
+					opacity:'1'
+				},400);
+				$('.mod_login').animate({
+					top: '-716',
+					opacity:'0'					
+				},400);				
+				$('.mod_register').animate({
+					top: '-358',
+					opacity:'0'					
+				},400);				
+				
+			}
+					
+		});
+	})(jQuery);
+});
+</script>
+
+</body>
+</html>

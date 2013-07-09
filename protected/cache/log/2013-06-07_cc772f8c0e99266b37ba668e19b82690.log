@@ -1,0 +1,32 @@
+2013-06-07 19:12:51 | 127.0.0.1 | /miso/index.php | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM ecm_store  WHERE store_id=store_id='Array' AND state=1 AND status=1 LIMIT 1<br>
+					<b>错误详情</b>: Unknown column 'status' in 'where clause'<br>
+					<b>错误代码</b>:1054<br>
+2013-06-07 19:14:03 | 127.0.0.1 | /miso/index.php | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM ecm_store  WHERE store_id=store_id='Array' AND state=1 AND status=1 LIMIT 1<br>
+					<b>错误详情</b>: Unknown column 'status' in 'where clause'<br>
+					<b>错误代码</b>:1054<br>
+2013-06-07 19:15:01 | 127.0.0.1 | /miso/index.php | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM ecm_store  WHERE store_id=store_id='286' AND state=1 AND status=1 LIMIT 1<br>
+					<b>错误详情</b>: Unknown column 'status' in 'where clause'<br>
+					<b>错误代码</b>:1054<br>
+2013-06-07 19:15:36 | 127.0.0.1 | /miso/index.php | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM ecm_store  WHERE store_id=286 AND status=1 LIMIT 1<br>
+					<b>错误详情</b>: Unknown column 'status' in 'where clause'<br>
+					<b>错误代码</b>:1054<br>
+2013-06-07 19:45:26 | 127.0.0.1 | /miso/index.php | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM ecm_store  WHERE store_id= AND state=1 LIMIT 1<br>
+					<b>错误详情</b>: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AND state=1 LIMIT 1' at line 1<br>
+					<b>错误代码</b>:1064<br>
+2013-06-07 19:46:11 | 127.0.0.1 | /miso/index.php | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM ecm_store  WHERE store_id= AND state=1 LIMIT 1<br>
+					<b>错误详情</b>: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AND state=1 LIMIT 1' at line 1<br>
+					<b>错误代码</b>:1064<br>
+2013-06-07 19:46:33 | 127.0.0.1 | /miso/index.php | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM ecm_goods  WHERE store_id=286 AND if_show=1 ORDER BY 0, 10<br>
+					<b>错误详情</b>: Unknown column '0' in 'order clause'<br>
+					<b>错误代码</b>:1054<br>
+2013-06-07 19:46:57 | 127.0.0.1 | /miso/index.php | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM ecm_goods  WHERE store_id=286 AND if_show=1 ORDER BY 0, 10<br>
+					<b>错误详情</b>: Unknown column '0' in 'order clause'<br>
+					<b>错误代码</b>:1054<br>

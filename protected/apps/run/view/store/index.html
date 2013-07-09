@@ -1,0 +1,131 @@
+{{include file="mod/store.html"}}
+<!-- 筛选 -->
+<div class="box_filter">
+	<div class="ku_fix ku_pos_r box_width">
+		
+        <!-- 分类筛选 -->
+        <div class="mod_classFilter">
+            <div class="mod_select">
+                <div class="selectLeft"></div>
+                <div class="choosed">所有产品</div>
+                <div class="open">
+                    <ul class="options">
+                        <li class="list">小家电</li>
+                        <li class="list">大家电</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 排序 -->
+		<div class="mod_sortby">
+            <div class="mod_select">
+                <div class="selectLeft"></div>
+                <div class="choosed">排序</div>
+                <div class="open">
+                    <ul class="options">
+                        <li class="list">价格从低到高</li>
+                        <li class="list">价格从高到低</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+    </div>	
+</div>
+
+<div class="box_width">
+
+    <!-- 产品列表 -->
+    <div class="box_goods_list">
+         <div class="title">小家电系列</div>
+         <div class="ku_fix mod_goods_list">
+            <div class="list">
+                <a class="pic" href="#index.php/goods/index"><img src="{{$__PUBLIC__}}/pic/product/1.jpg" alt="" /></a>
+                <a class="text" href="#index.php/goods/index">
+                    <div class="name">电热水壶1.5L</div>
+                    <div class="price">¥ 160.00</div>
+                </a>
+            </div>
+            <div class="list">
+                <a class="pic" href="#index.php/goods/index"><img src="{{$__PUBLIC__}}/pic/product/1.jpg" alt="" /></a>
+                <a class="text" href="#index.php/goods/index">
+                    <div class="name">电热水壶1.5L</div>
+                    <div class="price">¥ 160.00</div>
+                </a>
+            </div>
+         </div>
+    </div>
+
+    <div class="box_goods_list">
+         <div class="title">大家电系列</div>
+         <div class="ku_fix mod_goods_list">
+            <div class="list">
+                <a class="pic" href="#index.php/goods/index"><img src="{{$__PUBLIC__}}/pic/product/1.jpg" alt="" /></a>
+                <a class="text" href="#index.php/goods/index">
+                    <div class="name">电热水壶1.5L</div>
+                    <div class="price">¥ 160.00</div>
+                </a>
+            </div>
+            <div class="list">
+                <a class="pic" href="#index.php/goods/index"><img src="{{$__PUBLIC__}}/pic/product/1.jpg" alt="" /></a>
+                <a class="text" href="#index.php/goods/index">
+                    <div class="name">电热水壶1.5L</div>
+                    <div class="price">¥ 160.00</div>
+                </a>
+            </div>
+            <div class="list">
+                <a class="pic" href="#index.php/goods/index"><img src="{{$__PUBLIC__}}/pic/product/1.jpg" alt="" /></a>
+                <a class="text" href="#index.php/goods/index">
+                    <div class="name">电热水壶1.5L</div>
+                    <div class="price">¥ 160.00</div>
+                </a>
+            </div>
+            <div class="list">
+                <a class="pic" href="#index.php/goods/index"><img src="{{$__PUBLIC__}}/pic/product/1.jpg" alt="" /></a>
+                <a class="text" href="#index.php/goods/index">
+                    <div class="name">电热水壶1.5L</div>
+                    <div class="price">¥ 160.00</div>
+                </a>
+            </div>
+         </div>
+    </div>
+    
+</div>	
+        
+<script type="text/javascript">
+Do('isotope-js',function(){
+	(function($) {
+		$(function(){
+
+////////////// 下拉列表
+			$('.mod_select').click( function(){
+				// 取消事件冒泡  
+				event.stopPropagation();  
+				var that = $(this);
+				// 设置弹出层的位置
+				var offset = $(event.target).offset();
+				that.find('.open').show();
+				//.css({ top: offset.top + $(event.target).height() + "px", left: offset.left });  
+				//按钮的toggle,如果div是可见的,点击按钮切换为隐藏的;如果是隐藏的,切换为可见的。  
+				//that.find('.open').toggle();
+			});  
+			// 点击空白处或者自身隐藏弹出层，下面分别为滑动和淡出效果。  
+			$(document).click(function (event) { 
+				$('.mod_select').find('.open').fadeOut();
+			});
+			$('.mod_select').find('.list').click(function (event) { 
+				var that = $(this);
+				$('.mod_select').find('.list').removeClass('choose');	
+				that.addClass('choose');
+				that.parents('.mod_select').find('.open').fadeOut(); 
+				that.parents('.mod_select').find('.choosed').text(that.text());
+				
+			});
+			
+		});
+	})(jQuery);
+});
+</script>
+
+{{include file="mod/c_footer.html"}}

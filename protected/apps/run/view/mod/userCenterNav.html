@@ -1,0 +1,61 @@
+<!-- 用户中心 -->
+<div class="mod_userCenter_nav">
+	<div class="mod_userCenter_nav_user">
+        <div id="js_open_login_register" class="mod_userCenter_nav_nologin">
+            <div class="photo"><img src="{{$__PUBLIC__}}/images/userCenter/noPhoto.png" alt="" /></div>
+            <div class="photoCover"></div>
+			<div class="login">账号登录</div>
+            <div class="loginCover">
+                <div class="to"></div>
+            </div>
+        </div>
+        <a class="mod_userCenter_nav_logined" href="#index.php/userCenter/index">
+            <div class="photo"><img src="{{$__PUBLIC__}}/pic/userCenter/photo.jpg" alt="" /></div>
+            <div class="photoCover"></div>
+            <div class="name">pigongting</div>
+            <div class="nameCover">
+                <div class="to"></div>
+            </div>
+        </a>
+    </div>
+    <div id="js_wrapper" class="box_userCenter_nav_list">
+        <div class="mod_userCenter_nav_list">
+            <div class="aboutSite">
+                <a href="#index.php/userCenter/change" class="csss change"></a>
+                <a href="#index.php/userCenter/sitemap" class="csss sitemap"></a>
+            </div>
+            <div class="shopping">
+                <div class="csss shopping_title"></div>
+                <a href="#index.php/userCenter/cart" class="csss cart"></a>
+                <a href="#index.php/userCenter/order" class="csss order"></a>
+                <a href="#index.php/userCenter/coupon" class="csss coupon"></a>
+                <a href="#index.php/userCenter/love" class="csss love"></a>
+                <a href="#index.php/userCenter/history" class="csss history"></a>
+                <a href="#index.php/userCenter/address" class="csss address"></a>
+            </div>
+            <div class="chat">
+                <div class="csss chat_title"></div>
+                <a href="#index.php/userCenter/message" class="csss message">
+                    <div id="ajax_message" class="tips">200</div>
+                </a>
+                <a href="#index.php/userCenter/friend" class="csss friend"></a>
+            </div>
+            <div class="setting">
+                <div class="csss setting_title"></div>
+                <a href="#index.php/userCenter/set" class="csss set"></a>
+                <a href="#index.php/userCenter/help" class="csss help"></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 滚动条 开始 -->
+<script type="text/javascript" src="{{$__PUBLIC__}}/js/iscroll.js"></script>
+<script type="text/javascript">
+var myScroll;
+function loaded() {
+	myScroll = new iScroll('js_wrapper');
+}
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+</script>
+<!-- 滚动条 结束 -->

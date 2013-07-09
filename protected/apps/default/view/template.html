@@ -1,0 +1,181 @@
+<script src="__PUBLICAPP__/js/load-data.min.js"></script>
+<script>
+Do.ready('isotope-js', function(){
+///// 瀑布流
+	var startHref ;
+	var $container = $('#container');
+	
+	$container.isotope({
+		itemSelector : '.listBox'
+	});
+	
+	$('#js_store_index_wrapper').bind('onScrollEnd', function(e, iscroll){
+		
+			//首先取得下一页的链接地址
+			var href=$('.next_page a').attr("href");
+			startHref = href;
+			//判断下一页的链接地址是否存在
+			if( href != undefined ){
+				
+				//如果存在的话，用ajax获取数据
+				$.ajax({
+					type:"get",
+					url:href,
+					success:function(data){
+						//将返回的数据进行处理，挑选出class是post的内容块
+						var $res=$(data).find(".listBox");
+						
+						//结合masonry插件，将内容append进ID是content的内容块中
+						$container.append( $res ).isotope( 'appended', $res );
+						
+						//newHref获取返回的内容中的下一页的链接地址
+						var newHref=$(data).find(".next_page a").attr("href");
+						
+						//判断下一页地址是否存在，如果存在，替换当前页的链接地址。不存在，将当前页链接地址属性href移除，并替换内容为“下一页没有了”
+						if( newHref != undefined ){
+							$(".next_page a").attr("href",newHref);
+						}
+						else
+						{
+							$(".next_page a").html("亲，没有更多了").removeAttr("href")
+						}
+
+
+					}
+				})
+			}
+	});
+});
+</script>
+<script id="goods:detail" type="text/html">
+<!-- 商品_评论 -->
+<div data-role="content">
+	<div class="mod_goodsComment_no">
+		亲，暂时没有评论喔
+	</div>
+</div>
+<!-- 商品_基本 -->
+<div data-role="content">
+	<!-- 商品图片 -->
+	<div class="box_goodsPic" >
+		<img src="http://shop.100msh.com/<#=default_image#>" alt="">
+	</div>
+	
+	<!-- 商品信息 -->
+	<div class="mod_goodsInfo">
+		<div class="title"><#=goods_name#></div>
+		<div class="level">
+			<div class="star"></div>
+		</div>
+		<div class="price"><span>¥</span><#=price#></div>
+		<div class="slogn"><#=tags#></div>
+	</div>
+	
+	<!-- 商品功能 -->
+	<div class="box_goodsAction">
+		<div class="ku_fix mod_goodsAction">
+			<a class=" phone" data-tel="4006660598" data-srcname="cater" href="tel:4006660598">
+				<div class="icon"></div>
+				<div class="info">电话订购</div>
+			</a>
+			<a class=" tostore" href="#index.php?r=default/store/index&id=<#=store_id#>">
+				<div class="icon"></div>
+				<div class="info">商家首页</div>
+			</a>
+		</div>
+	</div>
+</div>
+<!-- 商品_详情 -->
+<div data-role="content">
+	<div class="mod_goodsDetail">
+		<#=description#>
+	</div>
+</div>
+</script>
+<script id="store:detail" type="text/html">
+<!-- 商家_评论 -->
+<div data-role="content">
+	<div class="mod_storeComment_no">
+		亲，暂时没有评论喔
+	</div>
+</div>
+<!-- 商家_基本 -->
+<div data-role="content">
+	<!-- 店铺图片 -->
+	<div class="box_storePic"><img src="http://shop.100msh.com/<#=store.store_logo#>" alt=""></div>
+	
+	<!-- 店铺信息 -->
+	<div class="mod_storeInfo">
+		<div class="title"><#=store.store_name#></div>
+		<div class="level">
+			<div class="star"></div>
+		</div>
+		<div class="address">
+			地址：<#=store.address#>
+		</div>
+		<div class="phone">
+			电话：<#=store.tel#>
+		</div>
+		<div class="contentMen">
+			联&ensp;系&ensp;人：<#=store.owner_name#>
+		</div>
+		<div class="time">
+			服务时间：<#=store.start_time#>-<#=store.close_time#>
+		</div>
+	</div>
+	
+	<!-- 店铺功能 -->
+	<div class="box_storeAction">
+		<div class="ku_fix mod_storeAction">
+			<a class=" phone" data-tel="<#=store.tel#>" data-srcname="cater" href="tel:<#=store.tel#>">
+				<div class="icon"></div>
+				<div class="info">致电商家</div>
+			</a>
+		</div>
+	</div>
+</div>
+<!-- 商品列表 -->
+<div data-role="content">
+	<div id="container" class="ku_fix mod_store_goodsList">
+		<#for(var i=0;i<goods.length;i++){#>
+			<div class="listBox">
+				<a class="list" href="#index.php?r=default/goods/index&id=<#=goods[i].goods_id#>">
+					<div class="picBox">
+						<img src="http://shop.100msh.com/<#=goods[i].default_image#>" alt="" />
+					</div>
+					<div class="name"><#=goods[i].goods_name#></div>
+					<div class="price"><span>¥</span><#=goods[i].price#></div>
+				</a>
+			</div> 
+		<#}#>
+	</div>
+	<div class="next_page">
+		<a href="index.php?r=default/store/goods_2">加载中...</a>
+	</div>
+</div>
+</script>
+<!-- 商品模板 -->
+<script id="search:goods" type="text/html">
+<div class="list goods">
+    <a class=" link" href="#index.php?r=default/goods/index&id=<#=goods_id#>">
+        <div class="pic">
+            <img src="http://shop.100msh.com/<#=default_image#>" alt="" />
+        </div>
+        <div class="service">
+            <div class="title"><#=goods_name#></div>
+            <div class="level"></div>
+            <div class="price"><span>¥</span><#=price#></div>
+        </div>
+    </a>
+</div>
+</script>
+<!-- 店铺模板 -->
+<script id="search:store" type="text/html">
+<div class="list store">
+    <a class=" link" href="#index.php?r=default/store/index&id=<#=store_id#>">
+        <div class="title"><#=store_name#></div>
+        <div class="level"></div>
+        <div class="phone"><#=tel#></div>
+    </a>
+</div>
+</script>

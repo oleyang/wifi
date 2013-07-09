@@ -1,0 +1,335 @@
+{{include file="mod/store.html"}}
+{{include file="mod/path.html"}}
+<script id="t:_1234-abcd-1" type="text/html">
+<div>
+    <!-- 我是注释，语法均为Javascript原生语法，默认分割符为 <% %> ，也可以自定义，参见API部分 -->
+    <!-- 输出变量语句，输出title -->
+    <h1>title:<%=title%></h1>
+    <!-- 判断语句if else-->
+    <%if(list.length>1) { %>
+        <h2>输出list，共有<%=list.length%>个元素</h2>
+        <ul>
+            <!-- 循环语句 for-->
+            <%for(var i=0;i<5;i++){%>
+                <li><%=list[i]%></li>
+            <%}%>
+        </ul>
+    <%}else{%>
+        <h2>没有list数据</h2>   
+    <%}%>
+</div>  
+</script>
+<div class="box_width">
+	<!-- 产品 -->
+    <div class="box_product">
+
+    	<!-- 切换到上一个产品/下一个产品 -->
+        <a href="#" class="mod_prev"></a>
+        <a href="#" class="mod_next"></a>
+
+    	<!-- 产品图片 -->
+    	<div class="mod_productPic">
+			<img src="{{$__PUBLIC__}}/pic/product/1.jpg" alt="" />
+        </div>
+        
+        <!-- 基本信息 -->
+        <div class="mod_baseInfo">
+            <div class="band">[ 苏泊尔 ]</div>
+            <div class="name">
+            	<span class="code">843271</span>
+                <span>-</span>
+                <span class="text">
+            		电热水壶1.5L
+                </span>
+            </div>
+            <div class="slogn">
+                <div class="text">
+                	新品上市惊喜价588元！中国大陆独家限量销售！可全身水洗，清洁更快速!防水干湿双剃设计，可在沐浴时使用！真正的贴面剃须，更精密的设计，带给您全新的剃须享受！
+                </div>
+            </div>
+            <div class="ku_fix price">
+                <div class="now_price"><span>¥</span>356.50</div>
+                <div class="shi_price">¥426.50</div>
+            </div>
+            <div class="comment">
+                <div class="title">产品评价：</div>
+                <div class="star">
+                	<div class="cover"></div>
+                	<div class="length" style="width:60%;"></div>
+                </div>
+            </div>
+            <div class="love">
+                <div class="title">收藏产品：</div>
+                <div class="text">25 人收藏</div>
+            </div>
+            <div class="activity">
+                <div class="title">专题活动：</div>
+                <a href="#" class="text">青春风暴，5折优惠</a>
+            </div>
+            <div class="QRCode">
+            	<div class="title">手机访问：</div>
+                <div class="text">
+            		<img src="{{$__PUBLIC__}}/pic/store/pic/qrcode.png" alt="" />
+                </div>
+            </div>
+        </div>
+        
+        <!-- 购物必选 -->
+        <div class="mod_shopping">
+            <div class="attr">
+                <div class="title">属性：</div>
+                <div class="mod_select">
+                    <div class="selectLeft"></div>
+                    <div class="choosed">请选择属性</div>
+                    <div class="open">
+                        <ul class="options">
+                            <li class="list">¥19.00 - S - 四核升级版C8813Q - 购机入网送话费</li>
+                            <li class="list">¥19.00 - M - C8813 0元购机 - 裸机 - 延长保修1年</li>
+                            <li class="list">¥19.00 - L - Stock remaining</li>
+                            <li class="list">¥19.00 - XL - Stock remaining</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="attr">
+                <div class="title">数量：（库存 10）</div>
+                <div class="mod_add_sub">
+                	<input type="text" value="1" maxval="10" />
+                	<div class="add"></div>
+                    <div class="sub"></div>
+                </div>
+                
+            </div>
+            <div class="addToCart" onclick="$.ajax(url?price=360&)">加入购物车<span></span></div>
+            <!-- 购物保障 -->
+            <div class="ku_fix mod_safeguard">
+                <div class="list shen">
+                    <span></span>
+                    <div class="explain">¥426.50</div>
+                </div>
+                <div class="list fast">
+                    <span></span>
+                    <div class="explain">一小时送达</div>
+                </div>
+                <div class="list good">
+                    <span></span>
+                    <div class="explain">绝对正品</div>
+                </div>
+                <div class="list tui">
+                    <span></span>
+                    <div class="explain">无理由退货</div>
+                </div>
+                <div class="list wu">
+                    <span></span>
+                    <div class="explain">售后无忧</div>
+                </div>
+                <div class="list fu">
+                    <span></span>
+                    <div class="explain">货到付款</div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 产品编辑详情 -->
+        <div class="mod_product_info">
+        	<div class="title">产品详情</div>
+            <div class="pic">
+                <img src="{{$__PUBLIC__}}/pic/product/2.jpg" alt="" />
+            </div>
+        </div>
+        
+	</div>
+
+	<!-- 仓库 -->
+    <div class="ku_fix mod_warehouse">
+    	<div class="title">仓库实景</div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/warehouse/1.jpg" alt="" />
+	        <div class="text">仓库临时短租</div>
+        </div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/warehouse/2.jpg" alt="" />
+	        <div class="text">家居物品存放保管</div>
+        </div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/warehouse/3.jpg" alt="" />
+	        <div class="text">电商物流仓储服务</div>
+        </div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/warehouse/4.jpg" alt="" />
+	        <div class="text">临时寄存保管</div>
+        </div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/warehouse/5.jpg" alt="" />
+	        <div class="text">安全的保护系统</div>
+        </div>
+    </div>
+
+    <!-- 发货 -->
+    <div class="ku_fix mod_delivery">
+    	<div class="title">发货流程</div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/delivery/1.jpg" alt="" />
+	        <div class="text">STEP1入库</div>
+        </div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/delivery/2.jpg" alt="" />
+	        <div class="text">STEP2 拣货</div>
+        </div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/delivery/3.jpg" alt="" />
+	        <div class="text">STEP3 复核</div>
+        </div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/delivery/4.jpg" alt="" />
+	        <div class="text">STEP4 打包</div>
+        </div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/delivery/5.jpg" alt="" />
+	        <div class="text">STEP5 发货</div>
+        </div>
+    </div>
+
+    <!-- 包装 -->
+    <div class="ku_fix mod_package">
+    	<div class="title">包装标准</div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/package/1.jpg" alt="" />
+	        <div class="text">箱内气泡保护</div>
+        </div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/package/2.jpg" alt="" />
+	        <div class="text">日化用品塑料袋保护</div>
+        </div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/package/3.jpg" alt="" />
+	        <div class="text">液态商品头保护</div>
+        </div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/package/4.jpg" alt="" />
+	        <div class="text">定制PVC膜缠绕</div>
+        </div>
+        <div class="imgBox">
+            <img src="{{$__PUBLIC__}}/pic/package/5.jpg" alt="" />
+	        <div class="text">五层缠绕纸箱</div>
+        </div>
+    </div>
+    
+</div>
+<script type="text/javascript">
+Do('isotope-js',function(){
+	(function($) {
+		$(function(){
+
+////////////// 瀑布流
+			/*
+			var $container = $('.mod_delivery');
+			
+			$container.imagesLoaded( function(){
+				$container.isotope({
+				  itemSelector : '.imgBox',
+				  columnWidth: 100
+				});
+			});
+    		*/
+    
+  
+			
+			
+			
+			
+			
+			
+////////////// 下拉列表
+			$('.mod_select').click( function(){
+				// 取消事件冒泡  
+				event.stopPropagation();  
+				var that = $(this);
+				// 设置弹出层的位置
+				var offset = $(event.target).offset();
+				that.find('.open').show();
+				//.css({ top: offset.top + $(event.target).height() + "px", left: offset.left });  
+				//按钮的toggle,如果div是可见的,点击按钮切换为隐藏的;如果是隐藏的,切换为可见的。  
+				//that.find('.open').toggle();
+			});  
+			// 点击空白处或者自身隐藏弹出层，下面分别为滑动和淡出效果。  
+			$(document).click(function (event) { 
+				$('.mod_select').find('.open').fadeOut();
+			});
+			$('.mod_select').find('.list').click(function (event) { 
+				var that = $(this);
+				$('.mod_select').find('.list').removeClass('choose');	
+				that.addClass('choose');
+				$('.mod_select').find('.open').fadeOut(); 
+				$('.mod_select').find('.choosed').text(that.text());
+				
+			});
+				
+////////////// 加减
+			$('.mod_add_sub .add').click( function(){
+				var addval = $('.mod_add_sub').find('input').val();
+				addval++;
+				var maxval = $('.mod_add_sub').find('input').attr('maxval');
+				var maxval = parseInt(maxval);
+				if( addval > maxval){
+					alert("抱歉，此产品库存只有 "+ maxval +" 件，如果您需要购买更多，请联系我们的客服: 400 666 0598");
+					return;
+				}
+				$('.mod_add_sub').find('input').val( addval );
+				
+			});
+			$('.mod_add_sub .sub').click( function(){
+				var addval = $('.mod_add_sub').find('input').val();
+				addval--;
+				if( addval < 1){
+					return;
+				}
+				$('.mod_add_sub').find('input').val( addval );
+				
+			});
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+					
+		});
+	})(jQuery);
+});
+</script>
+{{include file="mod/c_footer.html"}}
